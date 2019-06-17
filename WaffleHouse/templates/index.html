@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<!-- {% if user.is_authenticated %}
+	<h1>¡Bienvenido {{ user.first_name }} {{ user.last_name }}!</h1>
+	<a href="{% url 'logout' %}">Cerrar Sesión</a>
+{% else %}
+	<a href="{% url 'login' %}">Iniciar Sesión</a>
+	<a href="{% url 'registro' %}">Registrarse</a>
+{% endif %} -->
+<div id="banner">
+	<section>
+		<div class="content">
+			{% if user.is_authenticated %}
+				<h2>¡Bienvenido a Waffle House</br>{{user.first_name}} {{user.last_name}}!</h2>
+			{% else %}
+				<h2>¡Bienvenido a Waffle House!</h2>
+			{% endif %}
+			<a href="#main" class="button scrolly">OK, Gracias</a>
+		</div>
+	</section>
+</div>
+	
+
+<section id="main">
+	<div class="container">
+		<div class="row gtr-200">
+			<div class="col-12">
+				<section class="box highlight" id="WaffleIndex">
+					<!-- <ul class="special">
+						<li><a href="#" class="icon solid fa-search"><span class="label">Magnifier</span></a></li>
+						<li><a href="#" class="icon solid fa-tablet-alt"><span class="label">Tablet</span></a></li>
+						<li><a href="#" class="icon solid fa-flask"><span class="label">Flask</span></a></li>
+						<li><a href="#" class="icon solid fa-cog"><span class="label">Cog?</span></a></li>
+					</ul> -->
+					<header>
+						<h2>Estado del Waffle Index: {{waffleindex}}</h2>
+						<p>
+						{% if waffleindex == 'Rojo' %}
+							El restaurant está cerrado – Esto indica que hubo un daño grave al local o hubo una inundación severa.
+						{% endif %}
+						{% if waffleindex == 'Amarillo' %}
+							Menú limitado – Energía electrica limitada o hay apagón, o puede que haya escases de reserva alimenticia.
+						{% endif %}
+						{% if waffleindex == 'Verde' %}
+							Todo el menú está disponible – El restaurant tiene electricidad y todo funciona perfectamente.
+						{% endif %}
+					</p>
+					</header>
+				</section>
+			</div>
+			<div class="col-12" id="menu">
+				<section class="box features">
+					<h2 class="major"><span>Especialidades del Menú</span></h2>
+					<div>
+						<div class="row">
+							<div class="col-3 col-6-medium col-12-small">
+
+								<!-- Feature -->
+									<section class="box feature">
+										<a href="#" class="image featured"><img src="https://38i35a46ycxf3y5m9z12h84l-wpengine.netdna-ssl.com/wp-content/uploads/2013/01/Waffle-House-1.jpg" alt="" /></a>
+										<h3>Desayunos</h3>
+										<p>
+											Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
+											lectus dolore.
+										</p>
+									</section>
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+
+								<!-- Feature -->
+									<section class="box feature">
+										<a href="#" class="image featured"><img src="https://media-cdn.tripadvisor.com/media/photo-s/06/c3/b9/69/waffle-house-mulberry.jpg" alt="" /></a>
+										<h3>Almuerzos</h3>
+										<p>
+											Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
+											lectus dolore.
+										</p>
+									</section>
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+
+								<!-- Feature -->
+									<section class="box feature">
+										<a href="#" class="image featured"><img src="http://www.travelingwithjared.com/wp-content/uploads/2013/08/waffle-house1.jpg" alt="" /></a>
+										<h3>Cafetería</h3>
+										<p>
+											Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
+											lectus dolore.
+										</p>
+									</section>
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+									<section class="box feature">
+										<a href="#" class="image featured"><img src="https://wafflehouse.com/wp-content/uploads/2014/09/WaffletestkitchenFinal-1-300x225.png" alt="" /></a>
+										<h3>Test Kitchen</h3>
+										<p>
+											
+										</p>
+									</section>
+							</div>
+							<div class="col-12">
+								<ul class="actions">
+									<li><a href="#" class="button large">Pedidos a Domicilio</a></li>
+									<li><a href="#" class="button alt large">Ver Menú</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

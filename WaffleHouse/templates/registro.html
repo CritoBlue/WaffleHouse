@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="row"  style="background-color: #fff;">
+	<div class="col-12">
+		<section class="box features" style="width: 400px; margin: 25px auto; padding-bottom: 25px">
+			<h2 class="major"><span>Registrar Nuevo Trabajador</span></h2>
+			<form method="POST">
+				{% csrf_token %}
+				{{ form.as_p}}
+				{{ form2.as_p}}
+				<input type="submit" value="Registrar">
+			</form>
+		</section>
+	</div>
+</div>
+{% endblock %}
