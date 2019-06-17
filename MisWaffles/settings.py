@@ -25,7 +25,11 @@ SECRET_KEY = '=-)$n_7(b$c-m%qjy0@dd3dq%zpb447&zq4n1^_-#_w%ti&mi='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+        'critoblue.pythonanywhere.com',
+        'localhost',
+        '127.0.0.1'
+    ]
 
 # Application definition
 
