@@ -102,9 +102,30 @@
 							<div class="col-12">
 								<ul class="actions">
 									<li><a href="#" class="button large">Pedidos a Domicilio</a></li>
-									<li><a href="#" class="button alt large">Ver Menú</a></li>
+									<li><a href="#menu" class="button alt large">Ver Menú</a></li>
 								</ul>
 							</div>
+							<div class="col-12">
+								{% if user.is_authenticated%}
+									<h2 class="major"><span>Menú Trabajador</span></h2>
+								{% else %}
+									<h2 class="major"><span>Iniciar Sesión</span></h2>
+								{% endif %}
+								<ul class="actions">
+									{% if user.is_authenticated%}
+										<li><a href="{% url 'logout' %}" class="button large">Cerrar Sesión</a></li>
+										<li><a href="{% url 'verhorario' %}" class="button alt large">Ver Horario</a></li>
+									{% else %}
+										<li><a href="{% url 'login' %}" class="button large">Iniciar Sesión</a></li>
+									{% endif %}
+									
+									{% if user.is_superuser %}
+										<li><a href="{% url 'registro' %}" class="button large">Registrar Personal</a></li>
+										<li><a href="/admin" class="button alt large">Django Admin</a></li>
+									{% endif %}
+								</ul>
+							</div>	
+
 						</div>
 					</div>
 				</section>

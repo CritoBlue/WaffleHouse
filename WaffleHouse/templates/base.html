@@ -10,87 +10,66 @@
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
 			<!-- Nav -->
-				<nav id="nav">
-					<ul>
-						<li class="current"><a href="{% url 'index' %}">Inicio</a></li>
-						<li><a href="{% url 'index' %}#menu">Menú</a></li>
-						<li><a href="#">Realizar Pedido</a></li>
+			<nav id="nav">
+				<ul>
+					<li class="current"><a href="{% url 'index' %}">Inicio</a></li>
+					<li><a href="{% url 'index' %}#menu">Menú</a></li>
+					<li><a href="#">Realizar Pedido</a></li>
+					{% if user.is_authenticated%}
+						<li><a href="{% url 'verhorario' %}">Ver Horario</a></li>
+					{% endif %}
+					{% if user.is_superuser %}
+						<li><a href="{% url 'registro' %}">Registrar Personal</a></li>
+						<li><a href="/admin">Django Admin</a></li>
+					{% endif %}
+					<li><a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a></li>
+					<li>
 						{% if user.is_authenticated%}
-							<li><a href="{% url 'verhorario' %}">Ver Horario</a></li>
+							<a href="{% url 'logout' %}">Cerrar Sesión</a>
+						{% else %}
+							<a href="{% url 'login' %}">Iniciar Sesión</a>
 						{% endif %}
-						{% if user.is_superuser %}
-							<li><a href="{% url 'registro' %}">Registrar Personal</a></li>
-							<li><a href="/admin">Django Admin</a></li>
-						{% endif %}
-						<li><a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a></li>
-						<li>
-							{% if user.is_authenticated%}
-								<a href="{% url 'logout' %}">Cerrar Sesión</a>
-							{% else %}
-								<a href="{% url 'login' %}">Iniciar Sesión</a>
-							{% endif %}
-						</li>
-					</ul>
-				</nav>
+					</li>
+				</ul>
+			</nav>
+		<!-- Block Content -->
+		{% block content %}
 
-			{% block content %}
-
-			{% endblock %}
-			<!-- Footer -->
-				<footer id="footer">
-					<div class="container">
-						<div class="row gtr-200">
-							<!-- <div class="col-12"> -->
-
-								<!-- About -->
-									<!-- <section>
-										<h2 class="major"><span>What's this about?</span></h2>
-										<p>
-											This is <strong>TXT</strong>, yet another free responsive site template designed by
-											<a href="http://twitter.com/ajlkn">AJ</a> for <a href="http://html5up.net">HTML5 UP</a>. It's released under the
-											<a href="http://html5up.net/license/">Creative Commons Attribution</a> license so feel free to use it for
-											whatever you're working on (personal or commercial), just be sure to give us credit for the design.
-											That's basically it :)
-										</p>
-									</section> -->
-
-							<!-- </div> -->
-							<div class="col-12">
-
-								<!-- Contact -->
-									<section>
-										<h2 class="major"><span>Nuestras Redes</span></h2>
-										<ul class="contact">
-											<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
-											<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-											<li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
-											<li><a class="icon brands fa-telegram-plane" href="#"><span class="label">Telegram</span></a></li>
-											<li><a class="icon brands fa-whatsapp" href="#"><span class="label">Whatsapp</span></a></li>
-										</ul>
-									</section>
-
-							</div>
-						</div>
-
-						<!-- Copyright -->
-							<div id="copyright">
-								<ul class="menu">
-									<li>&copy; 2019 Duoc UC Escuela de Informática. Todos los derechos reservados</li><li>Diseño: <a href="http://html5up.net">HTML5 UP</a></li>
+		{% endblock %}
+		<!-- Footer -->
+			<footer id="footer" style="padding-top: 44px; padding-bottom: 44px;">
+				<div class="container">
+					<div class="row gtr-200">
+						<div class="col-12">
+							<!-- Contact -->
+							<section>
+								<h2 class="major"><span>Nuestras Redes</span></h2>
+								<ul class="contact">
+									<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
+									<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
+									<li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
+									<li><a class="icon brands fa-telegram-plane" href="#"><span class="label">Telegram</span></a></li>
+									<li><a class="icon brands fa-whatsapp" href="#"><span class="label">Whatsapp</span></a></li>
 								</ul>
-							</div>
-
+							</section>
+						</div>
 					</div>
-				</footer>
-
+					<!-- Copyright -->
+					<div id="copyright">
+						<ul class="menu">
+							<li>&copy; 2019 Duoc UC Escuela de Informática. Todos los derechos reservados</li><li>Diseño: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+				</div>
+			</footer>
 		</div>
-
 		<!-- Scripts -->
-			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
-			<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
-			<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
-			<script src="{% static 'assets/js/browser.min.js' %}"></script>
-			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
-			<script src="{% static 'assets/js/util.js' %}"></script>
-			<script src="{% static 'assets/js/js/main.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'assets/js/util.js' %}"></script>
+		<script src="{% static 'assets/js/js/main.js' %}"></script>
 	</body>
 </html>

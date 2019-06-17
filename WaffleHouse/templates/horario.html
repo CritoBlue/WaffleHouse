@@ -5,7 +5,22 @@
 	<div class="col-12">
 		<section class="box features" style="width: 400px; margin: 25px auto; padding-bottom: 25px">
 			<h2 class="major"><span>Horario</span></h2>
-			
+			<table>
+			    <tr>
+			        <th>Trabajador</th>
+			        <th>Hora de Entrada</th>
+			        <th>Hora de Salida</th>
+			        <th>Días Laborales</th>
+			    </tr>
+			    {% for listahorario in query_results %}
+			    <tr> 
+			        <td>{{ listahorario.trabajador }}</td>
+			        <td>{{ listahorario.horaEntrada }}</td>
+			        <td>{{ listahorario.horaSalida }}</td>
+			        <td>{{ listahorario.diasTrabaja }}</td>
+			    </tr>
+			    {% endfor %}
+			</table>
 		</section>
 	</div>
 </div>

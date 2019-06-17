@@ -3,18 +3,26 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User as Auth_User
 from .forms import UserForm, TrabajadorForm, LoginForm
-from .models import IndexActual, Trabajador
+from .models import IndexActual, Trabajador, Horario
+from django.contrib.auth.decorators import user_passes_test, login_required
 
 def index(request):
 	waffleindex = IndexActual.objects.latest('actualizado')
 	context = { "waffleindex" : waffleindex.actual.nombre}
 	return render(request, "index.html", context)
 
+@login_required
 def verhorario(request):
 	waffleindex = IndexActual.objects.latest('actualizado')
-	context = { "waffleindex" : waffleindex.actual.nombre}
+	trabuser = Trabajador.objects.filter(user=request.user)
+	#query_set = Horario.objects.filter(trabajador=trabuser)
+	context = { 
+		"waffleindex" : waffleindex.actual.nombre,
+		#"listahorario" : query_set
+	}
 	return render(request, "horario.html", context)
 
+@user_passes_test(lambda u: u.is_superuser)
 def registro(request):
 	next = request.GET.get('next')
 	userform = UserForm(request.POST or None)
