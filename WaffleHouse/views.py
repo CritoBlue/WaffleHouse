@@ -14,11 +14,18 @@ def index(request):
 @login_required
 def verhorario(request):
 	waffleindex = IndexActual.objects.latest('actualizado')
-	trabuser = Trabajador.objects.filter(user=request.user)
-	#query_set = Horario.objects.filter(trabajador=trabuser)
+	if request.user.is_authenticated:
+		username = request.user.username
+	userobj = Auth_User.objects.get(username=username)
+	trabuser = Trabajador.objects.get(user=userobj)
+	try:
+		query_set = Horario.objects.get(trabajador=trabuser)
+	except Horario.DoesNotExist:
+		query_set = None
+	
 	context = { 
 		"waffleindex" : waffleindex.actual.nombre,
-		#"listahorario" : query_set
+		"listahorario" : query_set
 	}
 	return render(request, "horario.html", context)
 
