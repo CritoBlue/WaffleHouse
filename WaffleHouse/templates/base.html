@@ -9,20 +9,28 @@
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
+			<!-- Header -->
+			<header id="header">
+				<div class="logo container">
+					<div>
+						<h1><a href="{% url 'index' %}" id="logo">Waffle House</a></h1>
+						<p></p>
+					</div>
+				</div>
+			</header>
 			<!-- Nav -->
 			<nav id="nav">
 				<ul>
 					<li class="current"><a href="{% url 'index' %}">Inicio</a></li>
 					<li><a href="{% url 'index' %}#menu">Menú</a></li>
-					<li><a href="#">Realizar Pedido</a></li>
+					<!-- <li><a href="#">Realizar Pedido</a></li> -->
 					{% if user.is_authenticated%}
 						<li><a href="{% url 'verhorario' %}">Ver Horario</a></li>
+						<li><a href="{% url 'verstock' %}">Revisar Stock</a></li>
 					{% endif %}
 					{% if user.is_superuser %}
 						<li><a href="{% url 'registro' %}">Registrar Personal</a></li>
-						<li><a href="/admin">Django Admin</a></li>
 					{% endif %}
-					<li><a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a></li>
 					<li>
 						{% if user.is_authenticated%}
 							<a href="{% url 'logout' %}">Cerrar Sesión</a>
@@ -30,6 +38,7 @@
 							<a href="{% url 'login' %}">Iniciar Sesión</a>
 						{% endif %}
 					</li>
+					<li><a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a></li>
 				</ul>
 			</nav>
 		<!-- Block Content -->

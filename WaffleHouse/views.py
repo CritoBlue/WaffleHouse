@@ -3,30 +3,43 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User as Auth_User
 from .forms import UserForm, TrabajadorForm, LoginForm
-from .models import IndexActual, Trabajador, Horario
+from .models import IndexActual, Trabajador, Horario, Producto
 from django.contrib.auth.decorators import user_passes_test, login_required
 
 def index(request):
 	waffleindex = IndexActual.objects.latest('actualizado')
-	context = { "waffleindex" : waffleindex.actual.nombre}
+	context = { "waffleindex" : waffleindex.actual.nombre }
 	return render(request, "index.html", context)
+
+@login_required
+def verstock(request):
+	waffleindex = IndexActual.objects.latest('actualizado')
+	qs_producto = Producto.objects.all()
+
+	context = { 
+		"waffleindex" : waffleindex.actual.nombre,
+		"productos" : qs_producto
+	}
+
+	return render(request, "stock.html", context)
 
 @login_required
 def verhorario(request):
 	waffleindex = IndexActual.objects.latest('actualizado')
-	if request.user.is_authenticated:
-		username = request.user.username
+	username = request.user.username
 	userobj = Auth_User.objects.get(username=username)
 	trabuser = Trabajador.objects.get(user=userobj)
+
 	try:
-		query_set = Horario.objects.get(trabajador=trabuser)
+		qs_horario = Horario.objects.get(trabajador=trabuser)
 	except Horario.DoesNotExist:
-		query_set = None
+		qs_horario = None
 	
 	context = { 
 		"waffleindex" : waffleindex.actual.nombre,
-		"listahorario" : query_set
+		"listahorario" : qs_horario
 	}
+
 	return render(request, "horario.html", context)
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -34,6 +47,7 @@ def registro(request):
 	next = request.GET.get('next')
 	userform = UserForm(request.POST or None)
 	trabajaform = TrabajadorForm(request.POST or None)
+
 	if userform.is_valid() and trabajaform.is_valid():
 		user = userform.save()
 		trabajador = trabajaform.save(commit=False)
@@ -47,11 +61,13 @@ def registro(request):
 		trabajaform = TrabajadorForm()
 
 	waffleindex = IndexActual.objects.latest('actualizado')
+
 	context = {
 		"form" : UserForm(),
 		"form2" : TrabajadorForm(),
 		"waffleindex" : waffleindex.actual.nombre
 	}
+	
 	return render(request, "registro.html", context)
 
 def login_view(request):
