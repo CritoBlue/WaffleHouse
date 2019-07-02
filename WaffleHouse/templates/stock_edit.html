@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="row"  style="background-color: #fff;">
+	<div class="col-12" style="overflow-x:auto;">
+		<main style="width: 900px; margin: 0px auto;">
+			<h2 class="major"><span>Actualizar Stock de Productos</span></h2>
+			<form style="width: 75%; margin: 0px auto;" method="POST">
+			    {% csrf_token %}
+			    {{ form.as_p }}
+			    <input style="margin-bottom: 25px;" type="submit" value="Actualizar" />
+			</form>
+		</main>
+	</div>
+</div>
+{% endblock %}

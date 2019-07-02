@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 
 class WaffleIndex (models.Model):
 	nombre = models.CharField(max_length = 20)
@@ -28,21 +30,21 @@ class Producto (models.Model):
 	descripcion = models.CharField(max_length = 255)
 	stock = models.IntegerField()
 	precio = models.PositiveIntegerField()
-	ultimaReposicion = models.DateTimeField('Última Reposición')
+	ultimaReposicion = models.DateTimeField('Última Reposición', auto_now = True)
 	def __str__(self):
 		return self.descripcion
 
 class Pedido (models.Model):
-	cliente = models.ManyToManyField(Cliente)
-	producto = models.ManyToManyField(Producto)
+	cliente = models.ForeignKey(Cliente, on_delete = models.CASCADE, default='Cliente')
+	producto = models.ForeignKey(Producto, on_delete = models.CASCADE, default='0')
 	cantidad = models.PositiveIntegerField()
 	valorTotal = models.PositiveIntegerField()
 	fecha = models.DateTimeField(auto_now_add = True)
 	def __str__(self):
-		return 'Pedido '+ self.id
+		return 'Pedido '+ str(self.id)
 
 class Trabajador(models.Model):
-	user = models.OneToOneField(User, on_delete = models.CASCADE)
+	user = models.OneToOneField(User, on_delete = models.CASCADE, related_name='trabajador')
 	salario = models.PositiveIntegerField(default=0)
 	administrador = models.BooleanField(default=False)
 
@@ -51,6 +53,15 @@ class Trabajador(models.Model):
 
 	class Meta:
 		verbose_name_plural = 'Trabajadores'
+
+	# @receiver(post_save, sender=User)
+	# def create_user_trabajador(sender, instance, created, **kwargs):
+	#     if created:
+	#         Trabajador.objects.create(user=instance)
+
+	# @receiver(post_save, sender=User)
+	# def save_user_trabajador(sender, instance, **kwargs):
+	#     instance.profile.save()
 
 class Horario (models.Model):
 	trabajador = models.OneToOneField(Trabajador, on_delete = models.CASCADE)

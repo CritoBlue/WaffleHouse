@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="row"  style="background-color: #fff;">
+	<div class="col-12">
+		<section class="box features" style="width: 500px; margin: 0 auto;">
+			<h2 class="major"><span>Cambiar Waffle Index</span></h2>
+			<form style="width: 75%; margin: 0px auto;" method="POST">
+				{% csrf_token %}
+				{{form.as_p}}
+				<input style="margin-bottom: 25px;" type="submit" value="Cambiar Index">
+			</form>
+		</section>
+	</div>
+</div>
+{% endblock %}

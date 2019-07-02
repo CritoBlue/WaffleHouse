@@ -38,7 +38,13 @@
 							<a href="{% url 'login' %}">Iniciar Sesión</a>
 						{% endif %}
 					</li>
-					<li><a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a></li>
+					{% if user.is_authenticated%}
+						{% if user.is_superuser %}
+							<li><a href="{% url 'cambiar_index' %}">Estado: {{waffleindex}}</a></li>
+						{% endif %}
+					{% else %}
+						<li><a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a></li>
+					{% endif %}
 				</ul>
 			</nav>
 		<!-- Block Content -->

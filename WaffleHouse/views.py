@@ -1,27 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.urls import  reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User as Auth_User
-from .forms import UserForm, TrabajadorForm, LoginForm
-from .models import IndexActual, Trabajador, Horario, Producto
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.views.generic.edit import CreateView, UpdateView
+from .forms import TrabajadorForm, LoginForm, IndexForm, ProductoForm
+from .models import IndexActual, Trabajador, Horario, Producto, Pedido
 
 def index(request):
 	waffleindex = IndexActual.objects.latest('actualizado')
 	context = { "waffleindex" : waffleindex.actual.nombre }
 	return render(request, "index.html", context)
-
-@login_required
-def verstock(request):
-	waffleindex = IndexActual.objects.latest('actualizado')
-	qs_producto = Producto.objects.all()
-
-	context = { 
-		"waffleindex" : waffleindex.actual.nombre,
-		"productos" : qs_producto
-	}
-
-	return render(request, "stock.html", context)
 
 @login_required
 def verhorario(request):
@@ -44,31 +34,98 @@ def verhorario(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def registro(request):
-	next = request.GET.get('next')
-	userform = UserForm(request.POST or None)
-	trabajaform = TrabajadorForm(request.POST or None)
+	trabajaform = TrabajadorForm()
 
-	if userform.is_valid() and trabajaform.is_valid():
-		user = userform.save()
-		trabajador = trabajaform.save(commit=False)
-		trabajador.user = user
-		trabajador.save()
-		login(request, user)
-		if next:
-			return redirect(next)
-	else:
-		userform = UserForm()
-		trabajaform = TrabajadorForm()
+	if request.method == 'POST':
+		trabajaform = TrabajadorForm(request.POST)
+		if trabajaform.is_valid():
+			trabajaform.save(commit=True)
+			user = Auth_User.objects.latest('date_joined')
+			salary = trabajaform.cleaned_data['salario']
+			worker = Trabajador(user=user, salario=salary)
+			worker.save()
+			trabajaform = TrabajadorForm()
+		else:
+			print(trabajaform.errors)
 
 	waffleindex = IndexActual.objects.latest('actualizado')
 
 	context = {
-		"form" : UserForm(),
-		"form2" : TrabajadorForm(),
+		"form" : trabajaform,
 		"waffleindex" : waffleindex.actual.nombre
 	}
 	
 	return render(request, "registro.html", context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def cambiar_index(request):
+	waffleindex = IndexActual.objects.latest('actualizado')
+	form = IndexForm()
+	if request.method == 'POST':
+		form = IndexForm(request.POST)
+		if form.is_valid():
+			nuevo = form.cleaned_data['actual']
+			indexobj = IndexActual(actual=nuevo)
+			indexobj.save()
+			form = IndexForm()
+			return redirect('index')
+		else:
+			print(form.errors)
+
+	context = { 
+		"waffleindex" : waffleindex.actual.nombre,
+		"form" : form
+	}
+	return render(request, "cambiar_index.html", context)
+
+@login_required
+def verstock(request):
+	waffleindex = IndexActual.objects.latest('actualizado')
+	qs_producto = Producto.objects.all()
+
+	context = { 
+		"waffleindex" : waffleindex.actual.nombre,
+		"productos" : qs_producto
+	}
+
+	return render(request, "stock.html", context)
+
+class StockCreate(CreateView):
+	model = Producto
+	fields = ['descripcion', 'stock', 'precio']
+	template_name = 'stock_add.html'
+	success_url = reverse_lazy('verstock')
+
+	def get_context_data(self, **kwargs):
+		context = super(StockCreate, self).get_context_data(**kwargs)
+		waffleindex = IndexActual.objects.latest('actualizado')
+		context['waffleindex'] = waffleindex.actual.nombre
+		return context
+
+class StockUpdate(UpdateView):
+	model = Producto
+	fields = ['descripcion', 'stock', 'precio']
+	template_name = 'stock_edit.html'
+	success_url = reverse_lazy('verstock')
+	pk_url_kwarg = 'pk'
+
+	def get_context_data(self, **kwargs):
+		context = super(StockUpdate, self).get_context_data(**kwargs)
+		waffleindex = IndexActual.objects.latest('actualizado')
+		context['waffleindex'] = waffleindex.actual.nombre
+		return context
+
+	def get_object(self, queryset=None):
+		queryset = Producto.objects.all()
+		pk = self.kwargs.get(self.pk_url_kwarg)
+		if pk is not None:
+			queryset = queryset.filter(pk=pk)
+		obj = queryset.get()
+		return obj
+
+def delete_stock(request, pk):
+	Producto.objects.filter(id=pk).delete()
+	return redirect('verstock')
 
 def login_view(request):
 	next = request.GET.get('next')

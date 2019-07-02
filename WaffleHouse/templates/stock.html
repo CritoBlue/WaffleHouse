@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row"  style="background-color: #fff;">
 	<div class="col-12" style="overflow-x:auto;">
-		<main style="width: 375px; margin: 25px auto; padding-bottom: 25px">
+		<main style="width: 900px; margin: 0px auto;">
 			<h2 class="major"><span>Stock de Productos</span></h2>
 			<table style="width: 100%;">
 			    <tr>
@@ -23,6 +23,12 @@
 			        	background-color: goldenrod; color: white; font-weight: bold;">
 			        	Ultima Reposición
 			        </th>
+			        {% if user.is_superuser %}
+						<th style="border: 1px solid #000; padding: 1em; vertical-align: middle; text-align: center; 
+			        	background-color: goldenrod; color: white; font-weight: bold;">Modificar</th>
+						<th style="border: 1px solid #000; padding: 1em; vertical-align: middle; text-align: center; 
+			        	background-color: goldenrod; color: white; font-weight: bold;">Eliminar</th>
+					{% endif %}
 			    </tr>
 			    {% for item in productos %}
 			    <tr> 
@@ -38,8 +44,29 @@
 			        <td style="border: 1px solid #000; padding: 1em; vertical-align: middle; text-align: center;">
 			        	{{ item.ultimaReposicion }}
 			        </td>
+			        {% if user.is_superuser %}
+						<td style="border: 1px solid #000; padding: 1em; vertical-align: middle; text-align: center;">
+			        		<a style="color: white; text-decoration: none; display: inline-block;" href="{% url 'edit_stock' pk=item.id %}">
+				        		<input type="button" value="Modificar">
+				        	</a>
+				        </td>
+				        <td style="border: 1px solid #000; padding: 1em; vertical-align: middle; text-align: center;">
+				        	<a style="color: white; text-decoration: none; display: inline-block;" href="{% url 'delete_stock' pk=item.id %}">
+				        		<input type="button" value="Eliminar">
+				        	</a>
+				        </td>
+					{% endif %}
 			    </tr>
 			    {% endfor %}
+			    {% if user.is_superuser %}
+				<tr>
+					<td colspan="6" style="padding: 1em; vertical-align: middle; text-align: center;">
+						<a style="color: white; text-decoration: none; display: inline-block;" href="{% url 'add_stock'%}">
+							<input type="button" value="Añadir Producto">
+						</a>
+					</td>
+				</tr>
+				{% endif %}
 			</table>
 		</main>
 	</div>
