@@ -13,7 +13,7 @@ def index(request):
 	context = { "waffleindex" : waffleindex.actual.nombre }
 	return render(request, "index.html", context)
 
-@login_required
+@login_required(login_url='login')
 def verhorario(request):
 	waffleindex = IndexActual.objects.latest('actualizado')
 	username = request.user.username
@@ -78,7 +78,7 @@ def cambiar_index(request):
 	}
 	return render(request, "cambiar_index.html", context)
 
-@login_required
+@login_required(login_url='login')
 def verstock(request):
 	waffleindex = IndexActual.objects.latest('actualizado')
 	qs_producto = Producto.objects.all()

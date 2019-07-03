@@ -22,14 +22,33 @@
 			<nav id="nav">
 				<ul>
 					<li class="current"><a href="{% url 'index' %}">Inicio</a></li>
-					<li><a href="{% url 'index' %}#menu">Menú</a></li>
+					<li>
+						<a href="{% url 'index' %}#menu">Menú</a>
+						<ul>
+							<li>
+								<a href="https://www.wafflehouse.com/wp-content/uploads/2018/01/WHI-18-008_noprices_menu-1-breakfast.png">
+									Desayunos
+								</a>
+							</li>
+							<li>
+								<a href="https://www.wafflehouse.com/wp-content/uploads/2018/01/WHI-18-008_noprices_menu-2-lunch-dinner.png">
+									Almuerzos
+								</a>
+							</li>
+						</ul>
+					</li>
 					<!-- <li><a href="#">Realizar Pedido</a></li> -->
 					{% if user.is_authenticated%}
-						<li><a href="{% url 'verhorario' %}">Ver Horario</a></li>
-						<li><a href="{% url 'verstock' %}">Revisar Stock</a></li>
-					{% endif %}
-					{% if user.is_superuser %}
-						<li><a href="{% url 'registro' %}">Registrar Personal</a></li>
+					<li>
+						<a href="#">Menú Trabajador</a>
+						<ul>
+							<li><a href="{% url 'verhorario' %}">Ver Horario</a></li>
+							<li><a href="{% url 'verstock' %}">Revisar Stock</a></li>
+							{% if user.is_superuser %}
+							<li><a href="{% url 'registro' %}">Registrar Personal</a></li>
+							{% endif %}
+						</ul>
+					</li>
 					{% endif %}
 					<li>
 						{% if user.is_authenticated%}
@@ -38,13 +57,14 @@
 							<a href="{% url 'login' %}">Iniciar Sesión</a>
 						{% endif %}
 					</li>
-					{% if user.is_authenticated%}
+					<li>
+						<a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a>
 						{% if user.is_superuser %}
-							<li><a href="{% url 'cambiar_index' %}">Estado: {{waffleindex}}</a></li>
+						<ul>
+							<li><a href="{% url 'cambiar_index' %}">Cambiar Estado</a></li>
+						</ul>
 						{% endif %}
-					{% else %}
-						<li><a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a></li>
-					{% endif %}
+					</li>
 				</ul>
 			</nav>
 		<!-- Block Content -->
@@ -85,6 +105,6 @@
 		<script src="{% static 'assets/js/browser.min.js' %}"></script>
 		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
 		<script src="{% static 'assets/js/util.js' %}"></script>
-		<script src="{% static 'assets/js/js/main.js' %}"></script>
+		<script src="{% static 'assets/js/main.js' %}"></script>
 	</body>
 </html>
