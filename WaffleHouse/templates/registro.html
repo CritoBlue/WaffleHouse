@@ -6,7 +6,7 @@
 		<section class="box features" style="width: 375px; margin: 25px auto; ">
 			<h2 class="major"><span>Nuevo Trabajador</span></h2>
 			<div style="width: 100%; background-color: gainsboro; padding: 2em; border-radius: 8px;">
-				<form method="POST" action="<!-- {% url 'login' %} -->">
+				<form method="POST">
 				{% csrf_token %}
 				{{ form.as_p}}
 				<input type="submit" value="Registrar">

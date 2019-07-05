@@ -45,6 +45,7 @@ def registro(request):
 			worker = Trabajador(user=user, salario=salary)
 			worker.save()
 			trabajaform = TrabajadorForm()
+			return redirect('login')
 		else:
 			print(trabajaform.errors)
 
