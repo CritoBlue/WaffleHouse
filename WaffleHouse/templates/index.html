@@ -1,13 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-<!-- {% if user.is_authenticated %}
-	<h1>¡Bienvenido {{ user.first_name }} {{ user.last_name }}!</h1>
-	<a href="{% url 'logout' %}">Cerrar Sesión</a>
-{% else %}
-	<a href="{% url 'login' %}">Iniciar Sesión</a>
-	<a href="{% url 'registro' %}">Registrarse</a>
-{% endif %} -->
 <div id="banner">
 	<section>
 		<div class="content">
@@ -20,19 +13,11 @@
 		</div>
 	</section>
 </div>
-	
-
 <section id="main">
 	<div class="container">
 		<div class="row gtr-200">
 			<div class="col-12">
 				<section class="box highlight" id="WaffleIndex">
-					<!-- <ul class="special">
-						<li><a href="#" class="icon solid fa-search"><span class="label">Magnifier</span></a></li>
-						<li><a href="#" class="icon solid fa-tablet-alt"><span class="label">Tablet</span></a></li>
-						<li><a href="#" class="icon solid fa-flask"><span class="label">Flask</span></a></li>
-						<li><a href="#" class="icon solid fa-cog"><span class="label">Cog?</span></a></li>
-					</ul> -->
 					<header>
 						<h2>Estado del Waffle Index: {{waffleindex}}</h2>
 						<p>
@@ -55,49 +40,28 @@
 					<div>
 						<div class="row">
 							<div class="col-3 col-6-medium col-12-small">
-
-								<!-- Feature -->
-									<section class="box feature">
-										<a href="#" class="image featured"><img src="https://38i35a46ycxf3y5m9z12h84l-wpengine.netdna-ssl.com/wp-content/uploads/2013/01/Waffle-House-1.jpg" alt="Desayunos" /></a>
-										<h3>Desayunos</h3>
-										<!-- <p>
-											Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-											lectus dolore.
-										</p> -->
-									</section>
+								<section class="box feature">
+									<a href="#" class="image featured"><img src="https://38i35a46ycxf3y5m9z12h84l-wpengine.netdna-ssl.com/wp-content/uploads/2013/01/Waffle-House-1.jpg" alt="Desayunos" /></a>
+									<h3>Desayunos</h3>
+								</section>
 							</div>
 							<div class="col-3 col-6-medium col-12-small">
-
-								<!-- Feature -->
-									<section class="box feature">
-										<a href="#" class="image featured"><img src="https://media-cdn.tripadvisor.com/media/photo-s/06/c3/b9/69/waffle-house-mulberry.jpg" alt="Almuerzos" /></a>
-										<h3>Almuerzos</h3>
-										<!-- <p>
-											Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-											lectus dolore.
-										</p> -->
-									</section>
+								<section class="box feature">
+									<a href="#" class="image featured"><img src="https://media-cdn.tripadvisor.com/media/photo-s/06/c3/b9/69/waffle-house-mulberry.jpg" alt="Almuerzos" /></a>
+									<h3>Almuerzos</h3>
+								</section>
 							</div>
 							<div class="col-3 col-6-medium col-12-small">
-
-								<!-- Feature -->
-									<section class="box feature">
-										<a href="#" class="image featured"><img src="http://www.travelingwithjared.com/wp-content/uploads/2013/08/waffle-house1.jpg" alt="Cafetería" /></a>
-										<h3>Cafetería</h3>
-										<!-- <p>
-											Phasellus quam turpis, feugiat sit amet ornare in, a hendrerit in
-											lectus dolore.
-										</p> -->
-									</section>
+								<section class="box feature">
+									<a href="#" class="image featured"><img src="http://www.travelingwithjared.com/wp-content/uploads/2013/08/waffle-house1.jpg" alt="Cafetería" /></a>
+									<h3>Cafetería</h3>
+								</section>
 							</div>
 							<div class="col-3 col-6-medium col-12-small">
-									<section class="box feature">
-										<a href="#" class="image featured"><img src="https://wafflehouse.com/wp-content/uploads/2014/09/WaffletestkitchenFinal-1-300x225.png" alt="Test Kitchen" /></a>
-										<h3>Test Kitchen</h3>
-										<!-- <p>
-											
-										</p> -->
-									</section>
+								<section class="box feature">
+									<a href="#" class="image featured"><img src="https://wafflehouse.com/wp-content/uploads/2014/09/WaffletestkitchenFinal-1-300x225.png" alt="Test Kitchen" /></a>
+									<h3>Test Kitchen</h3>
+								</section>
 							</div>
 							<div class="col-12">
 								<ul class="actions">
@@ -106,27 +70,6 @@
 									<li><a href="https://www.wafflehouse.com/wp-content/uploads/2018/01/WHI-18-008_noprices_menu-2-lunch-dinner.png" class="button alt large">Ver Menú Almuerzos</a></li>
 								</ul>
 							</div>
-							<!-- <div class="col-12">
-								{% if user.is_authenticated%}
-									<h2 class="major"><span>Menú Trabajador</span></h2>
-								{% else %}
-									<h2 class="major"><span>Iniciar Sesión</span></h2>
-								{% endif %}
-								<ul class="actions">
-									{% if user.is_authenticated%}
-										<li><a href="{% url 'logout' %}" class="button large">Cerrar Sesión</a></li>
-										<li><a href="{% url 'verhorario' %}" class="button alt large">Ver Horario</a></li>
-									{% else %}
-										<li><a href="{% url 'login' %}" class="button large">Iniciar Sesión</a></li>
-									{% endif %}
-									
-									{% if user.is_superuser %}
-										<li><a href="{% url 'registro' %}" class="button large">Registrar Personal</a></li>
-										<li><a href="/admin" class="button alt large">Django Admin</a></li>
-									{% endif %}
-								</ul>
-							</div> -->	
-
 						</div>
 					</div>
 				</section>

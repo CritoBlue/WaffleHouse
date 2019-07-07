@@ -1,110 +1,108 @@
 {% load staticfiles %}
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Waffle House</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
-	</head>
-	<body class="homepage is-preload">
-		<div id="page-wrapper">
-			<!-- Header -->
-			<header id="header">
-				<div class="logo container">
-					<div>
-						<h1><a href="{% url 'index' %}" id="logo">Waffle House</a></h1>
-						<p></p>
-					</div>
+<head>
+	<title>Waffle House</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
+</head>
+<body class="homepage is-preload">
+	<div id="page-wrapper">
+		<!-- Header -->
+		<header id="header">
+			<div class="logo container">
+				<div>
+					<h1><a href="{% url 'index' %}" id="logo">Waffle House</a></h1>
 				</div>
-			</header>
-			<!-- Nav -->
-			<nav id="nav">
-				<ul>
-					<li class="current"><a href="{% url 'index' %}">Inicio</a></li>
-					<li>
-						<a href="{% url 'index' %}#menu">Menú</a>
-						<ul>
-							<li>
-								<a href="https://www.wafflehouse.com/wp-content/uploads/2018/01/WHI-18-008_noprices_menu-1-breakfast.png">
-									Desayunos
-								</a>
-							</li>
-							<li>
-								<a href="https://www.wafflehouse.com/wp-content/uploads/2018/01/WHI-18-008_noprices_menu-2-lunch-dinner.png">
-									Almuerzos
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- <li><a href="#">Realizar Pedido</a></li> -->
-					{% if user.is_authenticated%}
-					<li>
-						<a href="#">Menú Trabajador</a>
-						<ul>
-							<li><a href="{% url 'verhorario' %}">Ver Horario</a></li>
-							<li><a href="{% url 'verstock' %}">Revisar Stock</a></li>
-							{% if user.is_superuser %}
-							<li><a href="{% url 'registro' %}">Registrar Personal</a></li>
-							{% endif %}
-						</ul>
-					</li>
-					{% endif %}
-					<li>
-						{% if user.is_authenticated%}
-							<a href="{% url 'logout' %}">Cerrar Sesión</a>
-						{% else %}
-							<a href="{% url 'login' %}">Iniciar Sesión</a>
-						{% endif %}
-					</li>
-					<li>
-						<a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a>
+			</div>
+		</header>
+		<!-- Nav -->
+		<nav id="nav">
+			<ul>
+				<li class="current"><a href="{% url 'index' %}">Inicio</a></li>
+				<li>
+					<a href="{% url 'index' %}#menu">Menú</a>
+					<ul>
+						<li>
+							<a href="https://www.wafflehouse.com/wp-content/uploads/2018/01/WHI-18-008_noprices_menu-1-breakfast.png">
+								Desayunos
+							</a>
+						</li>
+						<li>
+							<a href="https://www.wafflehouse.com/wp-content/uploads/2018/01/WHI-18-008_noprices_menu-2-lunch-dinner.png">
+								Almuerzos
+							</a>
+						</li>
+					</ul>
+				</li>
+				<!-- <li><a href="#">Realizar Pedido</a></li> -->
+				{% if user.is_authenticated%}
+				<li>
+					<a href="#">Menú Trabajador</a>
+					<ul>
+						<li><a href="{% url 'verhorario' %}">Ver Horario</a></li>
+						<li><a href="{% url 'verstock' %}">Revisar Stock</a></li>
 						{% if user.is_superuser %}
-						<ul>
-							<li><a href="{% url 'cambiar_index' %}">Cambiar Estado</a></li>
-						</ul>
+						<li><a href="{% url 'registro' %}">Registrar Personal</a></li>
 						{% endif %}
-					</li>
-				</ul>
-			</nav>
-		<!-- Block Content -->
+					</ul>
+				</li>
+				{% endif %}
+				<li>
+					{% if user.is_authenticated%}
+						<a href="{% url 'logout' %}">Cerrar Sesión</a>
+					{% else %}
+						<a href="{% url 'login' %}">Iniciar Sesión</a>
+					{% endif %}
+				</li>
+				<li>
+					<a href="{% url 'index' %}#main">Estado: {{waffleindex}}</a>
+					{% if user.is_superuser %}
+					<ul>
+						<li><a href="{% url 'cambiar_index' %}">Cambiar Estado</a></li>
+					</ul>
+					{% endif %}
+				</li>
+			</ul>
+		</nav>
+	<!-- Block Content -->
 		{% block content %}
-
 		{% endblock %}
-		<!-- Footer -->
-			<footer id="footer" style="padding-top: 44px; padding-bottom: 44px;">
-				<div class="container">
-					<div class="row gtr-200">
-						<div class="col-12">
-							<!-- Contact -->
-							<section>
-								<h2 class="major"><span>Nuestras Redes</span></h2>
-								<ul class="contact">
-									<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
-									<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-									<li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
-									<li><a class="icon brands fa-telegram-plane" href="#"><span class="label">Telegram</span></a></li>
-									<li><a class="icon brands fa-whatsapp" href="#"><span class="label">Whatsapp</span></a></li>
-								</ul>
-							</section>
-						</div>
-					</div>
-					<!-- Copyright -->
-					<div id="copyright">
-						<ul class="menu">
-							<li>&copy; 2019 Duoc UC Escuela de Informática. Todos los derechos reservados</li><li>Diseño: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
+	<!-- Footer -->
+		<footer id="footer" style="padding-top: 44px; padding-bottom: 44px;">
+			<div class="container">
+				<div class="row gtr-200">
+					<div class="col-12">
+						<!-- Contact -->
+						<section>
+							<h2 class="major"><span>Nuestras Redes</span></h2>
+							<ul class="contact">
+								<li><a class="icon brands fa-facebook-f" href="#"><span class="label">Facebook</span></a></li>
+								<li><a class="icon brands fa-twitter" href="#"><span class="label">Twitter</span></a></li>
+								<li><a class="icon brands fa-instagram" href="#"><span class="label">Instagram</span></a></li>
+								<li><a class="icon brands fa-telegram-plane" href="#"><span class="label">Telegram</span></a></li>
+								<li><a class="icon brands fa-whatsapp" href="#"><span class="label">Whatsapp</span></a></li>
+							</ul>
+						</section>
 					</div>
 				</div>
-			</footer>
-		</div>
-		<!-- Scripts -->
-		<script src="{% static 'assets/js/jquery.min.js' %}"></script>
-		<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
-		<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
-		<script src="{% static 'assets/js/browser.min.js' %}"></script>
-		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
-		<script src="{% static 'assets/js/util.js' %}"></script>
-		<script src="{% static 'assets/js/main.js' %}"></script>
-	</body>
+				<!-- Copyright -->
+				<div id="copyright">
+					<ul class="menu">
+						<li>&copy; 2019 Duoc UC Escuela de Informática. Todos los derechos reservados</li><li>Diseño: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!-- Scripts -->
+	<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+	<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
+	<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+	<script src="{% static 'assets/js/browser.min.js' %}"></script>
+	<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+	<script src="{% static 'assets/js/util.js' %}"></script>
+	<script src="{% static 'assets/js/main.js' %}"></script>
+</body>
 </html>

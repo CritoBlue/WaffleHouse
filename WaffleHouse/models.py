@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-# from django.db.models.signals import post_save
-# from django.dispatch import receiver
 
 class WaffleIndex (models.Model):
 	nombre = models.CharField(max_length = 20)
@@ -53,15 +51,6 @@ class Trabajador(models.Model):
 
 	class Meta:
 		verbose_name_plural = 'Trabajadores'
-
-	# @receiver(post_save, sender=User)
-	# def create_user_trabajador(sender, instance, created, **kwargs):
-	#     if created:
-	#         Trabajador.objects.create(user=instance)
-
-	# @receiver(post_save, sender=User)
-	# def save_user_trabajador(sender, instance, **kwargs):
-	#     instance.profile.save()
 
 class Horario (models.Model):
 	trabajador = models.OneToOneField(Trabajador, on_delete = models.CASCADE)
